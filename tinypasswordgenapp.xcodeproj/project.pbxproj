@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A87E74112BDF7D4400CBDE7E /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = A87E740F2BDF7D4400CBDE7E /* OFL.txt */; };
+		A87E74122BDF7D4400CBDE7E /* OxygenMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A87E74102BDF7D4400CBDE7E /* OxygenMono-Regular.ttf */; };
+		A89F36992BDFA32B002D578F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89F36982BDFA32B002D578F /* ViewModel.swift */; };
+		A89F369B2BDFCF6F002D578F /* en_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = A89F369A2BDFCF6F002D578F /* en_words.txt */; };
 		A8EEF7A62BD91C8500E9F83D /* tinypasswordgenappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EEF7A52BD91C8500E9F83D /* tinypasswordgenappApp.swift */; };
 		A8EEF7A82BD91C8500E9F83D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EEF7A72BD91C8500E9F83D /* ContentView.swift */; };
 		A8EEF7AA2BD91C8600E9F83D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8EEF7A92BD91C8600E9F83D /* Assets.xcassets */; };
@@ -14,6 +18,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A87E740F2BDF7D4400CBDE7E /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OFL.txt; path = tinypasswordgenapp/fonts/_OxygenMono/OFL.txt; sourceTree = SOURCE_ROOT; };
+		A87E74102BDF7D4400CBDE7E /* OxygenMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OxygenMono-Regular.ttf"; path = "tinypasswordgenapp/fonts/_OxygenMono/OxygenMono-Regular.ttf"; sourceTree = SOURCE_ROOT; };
+		A87E74152BDF85C500CBDE7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A89F36982BDFA32B002D578F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		A89F369A2BDFCF6F002D578F /* en_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = en_words.txt; sourceTree = "<group>"; };
+		A89F369C2BDFEEE8002D578F /* README.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.MD; sourceTree = "<group>"; };
 		A8EEF7A22BD91C8500E9F83D /* tinypasswordgenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinypasswordgenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8EEF7A52BD91C8500E9F83D /* tinypasswordgenappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tinypasswordgenappApp.swift; sourceTree = "<group>"; };
 		A8EEF7A72BD91C8500E9F83D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,9 +42,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A87E74012BDF78D500CBDE7E /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A87E740E2BDF7CF800CBDE7E /* OxygenMono */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		A87E740E2BDF7CF800CBDE7E /* OxygenMono */ = {
+			isa = PBXGroup;
+			children = (
+				A87E740F2BDF7D4400CBDE7E /* OFL.txt */,
+				A87E74102BDF7D4400CBDE7E /* OxygenMono-Regular.ttf */,
+			);
+			path = OxygenMono;
+			sourceTree = "<group>";
+		};
 		A8EEF7992BD91C8500E9F83D = {
 			isa = PBXGroup;
 			children = (
+				A89F369C2BDFEEE8002D578F /* README.MD */,
 				A8EEF7A42BD91C8500E9F83D /* tinypasswordgenapp */,
 				A8EEF7A32BD91C8500E9F83D /* Products */,
 			);
@@ -51,8 +79,12 @@
 		A8EEF7A42BD91C8500E9F83D /* tinypasswordgenapp */ = {
 			isa = PBXGroup;
 			children = (
+				A87E74152BDF85C500CBDE7E /* Info.plist */,
+				A89F369A2BDFCF6F002D578F /* en_words.txt */,
+				A87E74012BDF78D500CBDE7E /* fonts */,
 				A8EEF7A52BD91C8500E9F83D /* tinypasswordgenappApp.swift */,
 				A8EEF7A72BD91C8500E9F83D /* ContentView.swift */,
+				A89F36982BDFA32B002D578F /* ViewModel.swift */,
 				A8EEF7A92BD91C8600E9F83D /* Assets.xcassets */,
 				A8EEF7AB2BD91C8600E9F83D /* Preview Content */,
 			);
@@ -125,7 +157,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A87E74122BDF7D4400CBDE7E /* OxygenMono-Regular.ttf in Resources */,
+				A87E74112BDF7D4400CBDE7E /* OFL.txt in Resources */,
 				A8EEF7AD2BD91C8600E9F83D /* Preview Assets.xcassets in Resources */,
+				A89F369B2BDFCF6F002D578F /* en_words.txt in Resources */,
 				A8EEF7AA2BD91C8600E9F83D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8EEF7A82BD91C8500E9F83D /* ContentView.swift in Sources */,
+				A89F36992BDFA32B002D578F /* ViewModel.swift in Sources */,
 				A8EEF7A62BD91C8500E9F83D /* tinypasswordgenappApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +311,7 @@
 				DEVELOPMENT_TEAM = N2B3NFDH5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tinypasswordgenapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +341,7 @@
 				DEVELOPMENT_TEAM = N2B3NFDH5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tinypasswordgenapp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
