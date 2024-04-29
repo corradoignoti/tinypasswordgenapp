@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var digitIsOn: Bool = true
     @State private var uderscoreIsOn: Bool = false
     @State private var specialCharIsOn: Bool = false
+    @State private var numOfWords: Double = 3
     
     @StateObject private var viewModel = ViewModel()
 
@@ -24,12 +25,13 @@ struct ContentView: View {
                     .font(.title3)
                  */
                 Text("\(viewModel.generatedPassword)")
-                    .font(.custom("OxygenMono-Regular", size: 35))
+                    .font(.custom("OxygenMono-Regular", size: 20))
                     .fixedSize(horizontal: false, vertical: true)
-                    .lineLimit(3)
+                    .lineLimit(5)
                     .foregroundStyle(Color .white)
                     .border(Color .white)
-                    .frame(minWidth: 20)
+                    //.frame(minWidth: 20)
+                    .border(.white, width: 1)
                     .padding(.top, 50)
                     .padding()
                     .textSelection(.enabled)
@@ -40,19 +42,6 @@ struct ContentView: View {
                             Label("Copy to clipboard", systemImage: "doc.on.doc")
                         }
                     }
-                /*
-                HStack(){
-                    Label("Be wear!", systemImage: "exclamationmark.triangle")
-                        .labelStyle(.iconOnly)
-                        .font(.title)
-                        .padding(.leading, 50)
-                    Text("Long press to copy...")
-                        .font(.callout)
-                        .foregroundStyle(Color .gray)
-                        .bold()
-                        .padding(.leading, 30)
-                    //.padding(.bottom)
-                }*/
                 
                 Text("Options:")
                     .font(.headline)
@@ -63,7 +52,7 @@ struct ContentView: View {
                     VStack(alignment: .leading){
                         Toggle("Digit", isOn: $digitIsOn)
                             .onChange(of: digitIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
                             }
                         Text("Add a random number")
                             .font(.footnote)
@@ -72,7 +61,7 @@ struct ContentView: View {
                     VStack(alignment: .leading){
                         Toggle("Underscore", isOn: $uderscoreIsOn)
                             .onChange(of: uderscoreIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
                             }
                         Text("Use underscore (_) instead of hyphen (-) to separate words")
                             .font(.footnote)
@@ -82,12 +71,25 @@ struct ContentView: View {
                     VStack(alignment: .leading){
                         Toggle("Special characters", isOn: $specialCharIsOn)
                             .onChange(of: specialCharIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
                             }
                         Text("Use special chars")
                             .font(.footnote)
                     }
                     .padding()
+                    
+                    VStack(alignment: .leading){
+                        Slider(value: $numOfWords, 
+                               in: 3...16,
+                               step: 1)
+                            .onChange(of: numOfWords) {
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(self.numOfWords))
+                            }
+                        Text("Number of words: \(Int(numOfWords))")
+                            .font(.footnote)
+                    }
+                    .padding()
+                    
                 }
                 .padding(.bottom, 5)
                 .padding(.leading, 20)
@@ -117,10 +119,10 @@ struct ContentView: View {
                     .ignoresSafeArea()
         }
         .onShake{
-            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
         }
         .onAppear{
-            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
         }
     }
 }
