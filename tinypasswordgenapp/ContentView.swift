@@ -15,73 +15,101 @@ struct ContentView: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        VStack (alignment: .leading){
-            Text("This is a password generated for you")
-                .padding()
-                .foregroundStyle(Color .gray)
-                .font(.title3)
-            Text("\(viewModel.generatedPassword)")
-                .font(.custom("OxygenMono-Regular", size: 30))
-                .bold()
+        ScrollView {
+            VStack (alignment: .center){
+                /*
+                Text("This is a password generated for you")
+                    .padding()
+                    .foregroundStyle(Color .gray)
+                    .font(.title3)
+                 */
+                Text("\(viewModel.generatedPassword)")
+                    .font(.custom("OxygenMono-Regular", size: 35))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(3)
+                    .foregroundStyle(Color .white)
+                    .border(Color .white)
+                    .frame(minWidth: 20)
+                    .padding(.top, 50)
+                    .padding()
+                    .textSelection(.enabled)
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = viewModel.generatedPassword
+                        }) {
+                            Label("Copy to clipboard", systemImage: "doc.on.doc")
+                        }
+                    }
+                /*
+                HStack(){
+                    Label("Be wear!", systemImage: "exclamationmark.triangle")
+                        .labelStyle(.iconOnly)
+                        .font(.title)
+                        .padding(.leading, 50)
+                    Text("Long press to copy...")
+                        .font(.callout)
+                        .foregroundStyle(Color .gray)
+                        .bold()
+                        .padding(.leading, 30)
+                    //.padding(.bottom)
+                }*/
+                
+                Text("Options:")
+                    .font(.headline)
+                    .foregroundStyle(Color .gray)
+                    .padding()
+                    .bold()
+                Group() {
+                    VStack(alignment: .leading){
+                        Toggle("Digit", isOn: $digitIsOn)
+                            .onChange(of: digitIsOn) {
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                            }
+                        Text("Add a random number")
+                            .font(.footnote)
+                    }.padding()
+                    
+                    VStack(alignment: .leading){
+                        Toggle("Underscore", isOn: $uderscoreIsOn)
+                            .onChange(of: uderscoreIsOn) {
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                            }
+                        Text("Use underscore (_) instead of hyphen (-) to separate words")
+                            .font(.footnote)
+                    }
+                    .padding()
+                    
+                    VStack(alignment: .leading){
+                        Toggle("Special characters", isOn: $specialCharIsOn)
+                            .onChange(of: specialCharIsOn) {
+                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
+                            }
+                        Text("Use special chars")
+                            .font(.footnote)
+                    }
+                    .padding()
+                }
+                .padding(.bottom, 5)
+                .padding(.leading, 20)
+                .padding(.trailing, 40)
+                .font(.body)
                 .foregroundStyle(Color .white)
-                .padding(.bottom, 50)
-                .padding()
-                .textSelection(.enabled)
-            Text("Options:")
-                .font(.headline)
-                .foregroundStyle(Color .gray)
-                .padding()
-                .bold()
-            Group() {
-                VStack(alignment: .leading){
-                    Toggle("Digit", isOn: $digitIsOn)
-                        .onChange(of: digitIsOn) {
-                            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
-                        }
-                    Text("Add a random number")
-                        .font(.footnote)
-                }.padding()
-                
-                VStack(alignment: .leading){
-                    Toggle("Underscore", isOn: $uderscoreIsOn)
-                        .onChange(of: uderscoreIsOn) {
-                            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
-                        }
-                    Text("Use underscore (_) instead of hyphen (-) to separate words")
-                        .font(.footnote)
-                }
-                .padding()
-                
-                VStack(alignment: .leading){
-                    Toggle("Special characters", isOn: $specialCharIsOn)
-                        .onChange(of: specialCharIsOn) {
-                            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: 3)
-                        }
-                    Text("Use special chars")
-                        .font(.footnote)
-                }
-                .padding()
-            }
-            .padding(.bottom, 5)
-            .padding(.leading, 20)
-            .padding(.trailing, 40)
-            .font(.body)
-            .foregroundStyle(Color .white)
-            Text("Shake to regenerate...")
-                .foregroundStyle(Color .gray)
-                .font(.headline)
-                .padding()
-            HStack(){
-                Label("Be wear!", systemImage: "exclamationmark.triangle")
-                    .labelStyle(.iconOnly)
-                    .font(.title)
-                    .padding(.horizontal)
-                Text("Take note of the password: for security reasons it will not be stored anywhere and, so, it can't be recovered in any way")
+                Text("Shake to regenerate...")
                     .foregroundStyle(Color .gray)
                     .font(.headline)
-                
+                    .padding()
+                HStack(){
+                    Label("Be wear!", systemImage: "exclamationmark.triangle")
+                        .labelStyle(.iconOnly)
+                        .font(.title)
+                        .padding(.horizontal)
+                    Text("Take note of the password: for security reasons it will not be stored anywhere and, so, it can't be recovered in any way")
+                        .foregroundStyle(Color .gray)
+                        .font(.headline)
+                    
+                }
+                .padding()
             }
-            .padding()
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background{
