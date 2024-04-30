@@ -18,21 +18,13 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             VStack (alignment: .center){
-                /*
-                Text("This is a password generated for you")
-                    .padding()
-                    .foregroundStyle(Color .gray)
-                    .font(.title3)
-                 */
                 Text("\(viewModel.generatedPassword)")
                     .font(.custom("OxygenMono-Regular", size: 20))
-                    .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(5)
                     .foregroundStyle(Color .white)
-                    .border(Color .white)
-                    //.frame(minWidth: 20)
-                    .border(.white, width: 1)
-                    .padding(.top, 50)
+                    .frame(width: 350, height: 100, alignment: .center)
+                    .minimumScaleFactor(0.5)
+                    .padding(.top, 30)
                     .padding()
                     .textSelection(.enabled)
                     .contextMenu {
@@ -45,8 +37,8 @@ struct ContentView: View {
                 
                 Text("Options:")
                     .font(.headline)
-                    .foregroundStyle(Color .gray)
-                    .padding()
+                    .foregroundStyle(Color .white)
+                    .padding(.horizontal)
                     .bold()
                 Group() {
                     VStack(alignment: .leading){
@@ -54,7 +46,7 @@ struct ContentView: View {
                             .onChange(of: digitIsOn) {
                                 viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
                             }
-                        Text("Add a random number")
+                        Text("Add a random digit")
                             .font(.footnote)
                     }.padding()
                     
@@ -96,8 +88,8 @@ struct ContentView: View {
                 .padding(.trailing, 40)
                 .font(.body)
                 .foregroundStyle(Color .white)
-                Text("Shake to regenerate...")
-                    .foregroundStyle(Color .gray)
+                Text("Shake to generate an other password")
+                    .foregroundStyle(Color .white)
                     .font(.headline)
                     .padding()
                 HStack(){
@@ -105,8 +97,9 @@ struct ContentView: View {
                         .labelStyle(.iconOnly)
                         .font(.title)
                         .padding(.horizontal)
+                        .foregroundStyle(Color .white)
                     Text("Take note of the password: for security reasons it will not be stored anywhere and, so, it can't be recovered in any way")
-                        .foregroundStyle(Color .gray)
+                        .foregroundStyle(Color .white)
                         .font(.headline)
                     
                 }
@@ -115,7 +108,8 @@ struct ContentView: View {
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background{
-                Color.black.opacity(0.8)
+                //Color.black.opacity(0.8)
+            Color.indigo.opacity(0.8)
                     .ignoresSafeArea()
         }
         .onShake{
