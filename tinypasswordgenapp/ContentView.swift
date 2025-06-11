@@ -6,8 +6,10 @@ struct ContentView: View {
     @State private var specialCharIsOn: Bool = false
     @State private var numOfWords: Double = 3
     @State private var showCopiedMessage = false
+    @State private var showAboutView = false
     
     @StateObject private var viewModel = ViewModel()
+    
     
     var body: some View {
         ZStack {
@@ -33,6 +35,16 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     // Header con titolo
                     VStack {
+                        HStack {
+                            Button(action: { showAboutView = true }) {
+                                Image(systemName: "info.circle")
+                                    .font(.title2)
+                                    .foregroundStyle(.white)
+                                    .padding(.leading)
+                            }
+                            Spacer()
+                        }
+                        
                         Text("Tiny Password")
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundStyle(.white)
@@ -42,6 +54,7 @@ struct ContentView: View {
                             .font(.subheadline)
                             .foregroundStyle(Color(white: 0.9))
                     }
+                    .padding(.top, 30)
                     
                     // Area password con effetto neumorfismo
                     ZStack {
@@ -191,6 +204,9 @@ struct ContentView: View {
             .animation(.spring(), value: showCopiedMessage),
             alignment: .top
         )
+        .sheet(isPresented: $showAboutView) {
+            AboutView()
+        }
     }
     
     private func generatePassword() {

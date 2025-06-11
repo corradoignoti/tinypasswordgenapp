@@ -15,6 +15,7 @@
 		A8EEF7A82BD91C8500E9F83D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EEF7A72BD91C8500E9F83D /* ContentView.swift */; };
 		A8EEF7AA2BD91C8600E9F83D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8EEF7A92BD91C8600E9F83D /* Assets.xcassets */; };
 		A8EEF7AD2BD91C8600E9F83D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8EEF7AC2BD91C8600E9F83D /* Preview Assets.xcassets */; };
+		FAB36C6F2DFA1DE300801BFE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB36C6E2DFA1DE300801BFE /* AboutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A8EEF7A72BD91C8500E9F83D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A8EEF7A92BD91C8600E9F83D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8EEF7AC2BD91C8600E9F83D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FAB36C6E2DFA1DE300801BFE /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		A8EEF7A42BD91C8500E9F83D /* tinypasswordgenapp */ = {
 			isa = PBXGroup;
 			children = (
+				FAB36C6E2DFA1DE300801BFE /* AboutView.swift */,
 				A87E74152BDF85C500CBDE7E /* Info.plist */,
 				A89F369A2BDFCF6F002D578F /* en_words.txt */,
 				A87E74012BDF78D500CBDE7E /* fonts */,
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB36C6F2DFA1DE300801BFE /* AboutView.swift in Sources */,
 				A8EEF7A82BD91C8500E9F83D /* ContentView.swift in Sources */,
 				A89F36992BDFA32B002D578F /* ViewModel.swift in Sources */,
 				A8EEF7A62BD91C8500E9F83D /* tinypasswordgenappApp.swift in Sources */,
