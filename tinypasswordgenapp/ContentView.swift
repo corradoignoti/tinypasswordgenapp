@@ -30,110 +30,257 @@ struct ContentView: View {
     @State private var numOfWords: Double = 3
     
     @StateObject private var viewModel = ViewModel()
-
+    
     var body: some View {
-        ScrollView {
-            VStack (alignment: .center){
-                Text("\(viewModel.generatedPassword)")
-                    .font(.custom("OxygenMono-Regular", size: 20))
-                    .lineLimit(5)
-                    .foregroundStyle(Color .white)
-                    .frame(width: 350, height: 100, alignment: .center)
-                    .minimumScaleFactor(0.5)
-                    .padding(.top, 30)
-                    .padding()
-                    .textSelection(.enabled)
-                    .contextMenu {
-                        Button(action: {
-                            UIPasteboard.general.string = viewModel.generatedPassword
-                        }) {
-                            Label("Copy to clipboard", systemImage: "doc.on.doc")
+        ZStack {
+            // Sfondo con gradiente moderno
+            LinearGradient(
+                gradient: Gradient(colors: [Color(red: 0.1, green: 0.1, blue: 0.2), Color(red: 0.2, green: 0.1, blue: 0.3)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            
+            // Pattern decorativo
+            Circle()
+                .fill(Color.purple.opacity(0.1))
+                .frame(width: 300)
+                .offset(x: -150, y: -200)
+            Circle()
+                .fill(Color.blue.opacity(0.1))
+                .frame(width: 200)
+                .offset(x: 150, y: 300)
+            
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Header con titolo
+                    VStack {
+                        Text("Tiny Password")
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundStyle(.white)
+                            .padding(.top, 10)
+                        
+                        Text("Secure Password Generator")
+                            .font(.subheadline)
+                            .foregroundStyle(Color(white: 0.9))
+                    }
+                    
+                    // Area password con effetto neumorfismo
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(red: 0.15, green: 0.15, blue: 0.25))
+                            .shadow(color: .black.opacity(0.3), radius: 10, x: 5, y: 5)
+                            .shadow(color: .white.opacity(0.05), radius: 10, x: -3, y: -3)
+                        
+                        VStack {
+                            Text("\(viewModel.generatedPassword)")
+                                .font(.custom("OxygenMono-Regular", size: 20))
+                                .lineLimit(3)
+                                .foregroundStyle(Color.white)
+                                .padding()
+                                .frame(maxWidth: .infinity, minHeight: 100)
+                                .textSelection(.enabled)
+                                .contextMenu {
+                                    Button(action: {
+                                        UIPasteboard.general.string = viewModel.generatedPassword
+                                    }) {
+                                        Label("Copia negli appunti", systemImage: "doc.on.doc")
+                                    }
+                                }
+                            
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    UIPasteboard.general.string = viewModel.generatedPassword
+                                }) {
+                                    Label("Copia", systemImage: "doc.on.doc")
+                                        .font(.footnote)
+                                        .padding(8)
+                                        .background(Color.blue.opacity(0.2))
+                                        .clipShape(Capsule())
+                                }
+                            }
+                            .padding(.horizontal)
+                            .padding(.bottom)
                         }
                     }
-                
-                Text("Options:")
-                    .font(.headline)
-                    .foregroundStyle(Color .white)
                     .padding(.horizontal)
-                    .bold()
-                Group() {
-                    VStack(alignment: .leading){
-                        Toggle("Digit", isOn: $digitIsOn)
-                            .onChange(of: digitIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
-                            }
-                        Text("Add a random digit")
-                            .font(.footnote)
-                    }.padding()
                     
-                    VStack(alignment: .leading){
-                        Toggle("Underscore", isOn: $uderscoreIsOn)
-                            .onChange(of: uderscoreIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
+                    // Sezione opzioni con effetto vetro
+                    VStack(alignment: .leading) {
+                        Text("OPZIONI")
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundStyle(Color(white: 0.8))
+                            .padding(.leading, 5)
+                        
+                        GlassCard {
+                            VStack(spacing: 20) {
+                                ToggleRow(
+                                    icon: "number",
+                                    title: "Numeri",
+                                    description: "Aggiungi un numero casuale",
+                                    isOn: $digitIsOn
+                                )
+                                
+                                Divider().background(Color.white.opacity(0.2))
+                                
+                                ToggleRow(
+                                    icon: "underline",
+                                    title: "Underscore",
+                                    description: "Sostituisci trattini con _",
+                                    isOn: $uderscoreIsOn
+                                )
+                                
+                                Divider().background(Color.white.opacity(0.2))
+                                
+                                ToggleRow(
+                                    icon: "exclamationmark.shield",
+                                    title: "Caratteri speciali",
+                                    description: "Aggiungi caratteri speciali",
+                                    isOn: $specialCharIsOn
+                                )
+                                
+                                Divider().background(Color.white.opacity(0.2))
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Image(systemName: "text.word.spacing")
+                                            .foregroundStyle(.blue)
+                                        Text("Numero di parole")
+                                            .foregroundStyle(.white)
+                                    }
+                                    
+                                    Slider(value: $numOfWords, in: 3...16, step: 1)
+                                        .tint(.blue)
+                                    
+                                    Text("\(Int(numOfWords)) parole")
+                                        .font(.footnote)
+                                        .foregroundStyle(Color(white: 0.8))
+                                }
                             }
-                        Text("Use underscore (_) instead of hyphen (-) to separate words")
-                            .font(.footnote)
+                            .padding()
+                        }
                     }
                     .padding()
                     
-                    VStack(alignment: .leading){
-                        Toggle("Special characters", isOn: $specialCharIsOn)
-                            .onChange(of: specialCharIsOn) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
-                            }
-                        Text("Use special chars")
-                            .font(.footnote)
+                    // Bottone di generazione
+                    Button(action: generatePassword) {
+                        Label("Genera nuova password", systemImage: "arrow.clockwise")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundStyle(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                LinearGradient(
+                                    colors: [Color.blue, Color.purple],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(Capsule())
                     }
-                    .padding()
+                    .padding(.horizontal)
+                    .buttonStyle(.plain)
                     
-                    VStack(alignment: .leading){
-                        Slider(value: $numOfWords, 
-                               in: 3...16,
-                               step: 1)
-                            .onChange(of: numOfWords) {
-                                viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(self.numOfWords))
-                            }
-                        Text("Number of words: \(Int(numOfWords))")
-                            .font(.footnote)
-                    }
+                    // Avviso di sicurezza
+                    WarningCard(
+                        message: "Salva la password generata: per motivi di sicurezza non verrà memorizzata e non può essere recuperata"
+                    )
                     .padding()
-                    
                 }
-                .padding(.bottom, 5)
-                .padding(.leading, 20)
-                .padding(.trailing, 40)
-                .font(.body)
-                .foregroundStyle(Color .white)
-                Text("Shake to generate an other password")
-                    .foregroundStyle(Color .white)
-                    .font(.headline)
-                    .padding()
-                HStack(){
-                    Label("Be wear!", systemImage: "exclamationmark.triangle")
-                        .labelStyle(.iconOnly)
-                        .font(.title)
-                        .padding(.horizontal)
-                        .foregroundStyle(Color .white)
-                    Text("Take note of the password: for security reasons it will not be stored anywhere and, so, it can't be recovered in any way")
-                        .foregroundStyle(Color .white)
-                        .font(.headline)
-                    
-                }
-                .padding()
+                .padding(.vertical)
             }
         }
-        .containerRelativeFrame([.horizontal, .vertical])
-        .background{
-                //Color.black.opacity(0.8)
-            Color.indigo.opacity(0.8)
-                    .ignoresSafeArea()
+        .onShake(perform: generatePassword)
+        .onAppear(perform: generatePassword)
+        .onChange(of: digitIsOn) { _ in generatePassword() }
+        .onChange(of: uderscoreIsOn) { _ in generatePassword() }
+        .onChange(of: specialCharIsOn) { _ in generatePassword() }
+        .onChange(of: numOfWords) { _ in generatePassword() }
+    }
+    
+    private func generatePassword() {
+        viewModel.generatePassword(
+            useDigit: digitIsOn,
+            useUnderscore: uderscoreIsOn,
+            useSpecialChar: specialCharIsOn,
+            numberOfWords: Int(numOfWords))
+    }
+}
+
+// Componente per le righe delle opzioni
+struct ToggleRow: View {
+    let icon: String
+    let title: String
+    let description: String
+    @Binding var isOn: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundStyle(.blue)
+                Text(title)
+                    .foregroundStyle(.white)
+                Spacer()
+                Toggle("", isOn: $isOn)
+                    .labelsHidden()
+                    .tint(.blue)
+            }
+            
+            Text(description)
+                .font(.footnote)
+                .foregroundStyle(Color(white: 0.7))
         }
-        .onShake{
-            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
+    }
+}
+
+// Card con effetto vetro
+struct GlassCard<Content: View>: View {
+    let content: Content
+    
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(white: 0.1).opacity(0.25))
+                .background(
+                    Color.white.opacity(0.08)
+                        .blur(radius: 10)
+                )
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+            
+            content
         }
-        .onAppear{
-            viewModel.generatePassword(useDigit: digitIsOn, useUnderscore: uderscoreIsOn, useSpecialChar: specialCharIsOn, numberOfWords: Int(numOfWords))
+    }
+}
+
+// Componente per l'avviso di sicurezza
+struct WarningCard: View {
+    let message: String
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.yellow)
+                .font(.title)
+                .padding(.trailing, 10)
+            
+            Text(message)
+                .foregroundStyle(Color(white: 0.9))
+                .font(.system(.footnote, design: .rounded))
         }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.yellow.opacity(0.15))
+        )
     }
 }
 
