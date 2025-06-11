@@ -1,26 +1,3 @@
-//
-//  ContentView.swift
-//  tinypasswordgenapp
-//
-//  Created by corrado.ignoti on 24/04/24.
-//
-
-/*
- Copyright 2024 Corrado Ignoti.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
-
 import SwiftUI
 
 struct ContentView: View {
@@ -28,6 +5,7 @@ struct ContentView: View {
     @State private var uderscoreIsOn: Bool = false
     @State private var specialCharIsOn: Bool = false
     @State private var numOfWords: Double = 3
+    @State private var showCopiedMessage = false
     
     @StateObject private var viewModel = ViewModel()
     
@@ -81,23 +59,21 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, minHeight: 100)
                                 .textSelection(.enabled)
                                 .contextMenu {
-                                    Button(action: {
-                                        UIPasteboard.general.string = viewModel.generatedPassword
-                                    }) {
+                                    Button(action: copyToClipboard) {
                                         Label("Copia negli appunti", systemImage: "doc.on.doc")
                                     }
                                 }
                             
                             HStack {
                                 Spacer()
-                                Button(action: {
-                                    UIPasteboard.general.string = viewModel.generatedPassword
-                                }) {
+                                Button(action: copyToClipboard) {
                                     Label("Copia", systemImage: "doc.on.doc")
                                         .font(.footnote)
                                         .padding(8)
                                         .background(Color.blue.opacity(0.2))
                                         .clipShape(Capsule())
+                                        .scaleEffect(showCopiedMessage ? 0.9 : 1.0)
+                                        .opacity(showCopiedMessage ? 0.7 : 1.0)
                                 }
                             }
                             .padding(.horizontal)
@@ -197,6 +173,24 @@ struct ContentView: View {
         .onChange(of: uderscoreIsOn) { _ in generatePassword() }
         .onChange(of: specialCharIsOn) { _ in generatePassword() }
         .onChange(of: numOfWords) { _ in generatePassword() }
+        .overlay(
+            // Messaggio di copia confermata
+            Group {
+                if showCopiedMessage {
+                    ConfirmationPopup()
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    showCopiedMessage = false
+                                }
+                            }
+                        }
+                }
+            }
+            .animation(.spring(), value: showCopiedMessage),
+            alignment: .top
+        )
     }
     
     private func generatePassword() {
@@ -205,6 +199,19 @@ struct ContentView: View {
             useUnderscore: uderscoreIsOn,
             useSpecialChar: specialCharIsOn,
             numberOfWords: Int(numOfWords))
+    }
+    
+    private func copyToClipboard() {
+        UIPasteboard.general.string = viewModel.generatedPassword
+        
+        // Mostra feedback visivo
+        withAnimation {
+            showCopiedMessage = true
+        }
+        
+        // Feedback tattile
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 }
 
@@ -281,6 +288,26 @@ struct WarningCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.yellow.opacity(0.15))
         )
+    }
+}
+
+// Popup di conferma copia
+struct ConfirmationPopup: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+            Text("Copiato!")
+                .foregroundColor(.white)
+                .font(.headline)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(white: 0.1).opacity(0.9))
+                .shadow(radius: 10)
+        )
+        .padding(.top, 40)
     }
 }
 
