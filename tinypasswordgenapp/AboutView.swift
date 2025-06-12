@@ -123,6 +123,11 @@ struct AboutView: View {
                                 .font(.system(.body, design: .rounded))
                                 .foregroundStyle(.white)
                             
+                            //Password icons created by bearicons - Flaticon (https://www.flaticon.com/free-icons/password)
+                            Link("App icon created by bearicons - Flaticon", destination: URL(string: "https://www.flaticon.com/free-icons/password")!)
+                                .font(.system(.caption, design: .rounded))
+                                .foregroundStyle(Color(white: 0.7))
+                            
                             Text("Made with ❤️ by Corrado Ignoti. Licensed under the Apache License, Version 2.0.")
                                 .font(.system(.footnote, design: .rounded))
                                 .foregroundStyle(Color(white: 0.7))
